@@ -27,4 +27,19 @@ export class JobPostingService {
       return error;
     }
   }
+
+  // 채용 공고 전체 목록
+  async getAllPost() {
+    const posts = await this.jobPostingRepository.find({
+      select: ['id', 'position', 'reward', 'stack'],
+    });
+    const allList = [];
+    for (let i = 0; i < posts.length; i++) {
+      allList.push({
+        ...(await this.companyService.findCompanyById(posts[i].companyId)),
+        ...posts[i],
+      });
+    }
+    return allList;
+  }
 }

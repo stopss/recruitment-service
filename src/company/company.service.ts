@@ -16,6 +16,7 @@ export class CompanyService {
   // 회사 찾기
   async findCompanyById(companyId: number) {
     const company = await this.companyRepository.findOne({
+      select: ['id', 'company_name', 'country', 'region'],
       where: { id: companyId },
     });
 
