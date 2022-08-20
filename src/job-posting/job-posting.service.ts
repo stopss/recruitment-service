@@ -66,4 +66,17 @@ export class JobPostingService {
       return error;
     }
   }
+
+  // 채용 공고 삭제
+  async deletePost(id: number) {
+    try {
+      await this.findPostById(id);
+
+      await this.jobPostingRepository.delete(id);
+
+      return { message: 'Delete job-posting' };
+    } catch (error) {
+      return error;
+    }
+  }
 }
