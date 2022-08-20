@@ -1,15 +1,29 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { savePostDto } from './dto/save.post.dto';
 import { updatePostDto } from './dto/update.post.dto';
 import { JobPostingService } from './job-posting.service';
 
-@Controller('post')
+@Controller('posting')
 export class JobPostingController {
   constructor(private readonly jobPostingsService: JobPostingService) {}
 
   @Get()
   getAllPost() {
     return this.jobPostingsService.getAllPost();
+  }
+
+  @Get('/search')
+  searchPost(@Query('keyword') keyword: string) {
+    return this.jobPostingsService.searchPost(keyword);
   }
 
   @Post()
@@ -29,6 +43,7 @@ export class JobPostingController {
 
   @Get(':id')
   detailPost(@Param('id') id: number) {
+    console.log('dd');
     return this.jobPostingsService.detailPost(id);
   }
 }
