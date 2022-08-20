@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { savePostDto } from './dto/save.post.dto';
+import { updatePostDto } from './dto/update.post.dto';
 import { JobPostingService } from './job-posting.service';
 
 @Controller('post')
@@ -14,5 +15,10 @@ export class JobPostingController {
   @Post()
   savePost(@Body() body: savePostDto): Promise<any> {
     return this.jobPostingsService.savePost(body);
+  }
+
+  @Put(':id')
+  updatePost(@Param('id') id: number, @Body() body: updatePostDto) {
+    return this.jobPostingsService.updatePost(id, body);
   }
 }
