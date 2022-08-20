@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { JobPostingService } from 'src/job-posting/job-posting.service';
 import { Repository } from 'typeorm';
+import { ApplyEntity } from './dto/apply.entity';
 import { saveUserDto } from './dto/save.user.dto';
 import { UserEntity } from './user.entity';
 
@@ -9,8 +11,12 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
+    @InjectRepository(ApplyEntity)
+    private applyRepository: Repository<ApplyEntity>,
+    private readonly jobPostingService: JobPostingService,
   ) {
     this.userRepository = userRepository;
+    this.applyRepository = applyRepository;
   }
 
   async findUserById(id: number) {
@@ -30,6 +36,24 @@ export class UserService {
       return { message: 'Save Success', ...result };
     } catch (error) {
       return { error };
+    }
+  }
+
+  // 채용 공고 지원
+  async applyPost(userId: number, postId: number) {
+    try {
+      await this.findUserById(userId);
+
+      await this.jobPostingService.findPostById(postId);
+
+      await this.applyRepository.upsert(
+        [{ userId, postId }],
+        ['userId', 'postId'],
+      );
+
+      return { message: 'apply job-posting'};
+    } catch (error) {
+      return error;
     }
   }
 }

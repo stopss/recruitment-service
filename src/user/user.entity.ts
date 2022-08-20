@@ -1,4 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { ApplyEntity } from './dto/apply.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -19,4 +20,7 @@ export class UserEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => ApplyEntity, (applyHistory) => applyHistory.user)
+  applyHistory: ApplyEntity[];
 }
