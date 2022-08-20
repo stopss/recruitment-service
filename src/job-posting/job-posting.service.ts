@@ -17,7 +17,10 @@ export class JobPostingService {
   }
 
   async findPostById(id: number) {
-    const post = await this.jobPostingRepository.findOne({ where: { id: id } });
+    const post = await this.jobPostingRepository.findOne({
+      select: ['id', 'position', 'reward', 'content', 'stack'],
+      where: { id: id },
+    });
 
     if (!post) {
       throw new NotFoundException('Not Found job-posting ID');
@@ -78,5 +81,26 @@ export class JobPostingService {
     } catch (error) {
       return error;
     }
+  }
+
+  // 채용공고 상세
+  async detailPost(id: number) {
+    const post = await this.findPostById(id);
+
+    const company = await this.companyService.findCompanyById(post.companyId);
+
+    const posts = await this.jobPostingRepository.find({
+      where: { companyId: post.companyId },
+    });
+
+    const otherPosts = [];
+    for (let i = 0; i < posts.length; i++) {
+      if (post.id === posts[i].id) continue;
+      otherPosts.push(posts[i].id);
+    }
+
+    const detail = { ...company, ...post, 회사가올린다른채용공고: otherPosts };
+
+    return detail;
   }
 }

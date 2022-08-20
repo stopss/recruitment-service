@@ -26,4 +26,9 @@ export class JobPostingController {
   deletePost(@Param('id') id: number) {
     return this.jobPostingsService.deletePost(id);
   }
+
+  @Get(':id')
+  detailPost(@Param('id') id: number) {
+    return this.jobPostingsService.detailPost(id);
+  }
 }
