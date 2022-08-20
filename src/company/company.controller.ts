@@ -7,7 +7,7 @@ export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
-  createCompany(@Body() body: createCompanyDto): Promise<boolean> {
+  createCompany(@Body() body: createCompanyDto): Promise<any> {
     return this.companyService.createCompany(body);
   }
 

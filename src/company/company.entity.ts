@@ -1,12 +1,14 @@
+import { JobPostingEntity } from 'src/job-posting/job-posting.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'companies' })
 export class CompanyEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,4 +27,7 @@ export class CompanyEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => JobPostingEntity, (jobPosting) => jobPosting.company)
+  jobPosting: JobPostingEntity[];
 }
