@@ -1,5 +1,5 @@
 import { CompanyEntity } from 'src/company/company.entity';
-import { ApplyEntity } from 'src/user/dto/apply.entity';
+import { ApplyEntity } from 'src/user/apply.entity';
 import {
   Column,
   CreateDateColumn,

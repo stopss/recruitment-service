@@ -1,6 +1,14 @@
 import { JobPostingEntity } from 'src/job-posting/job-posting.entity';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { UserEntity } from '../user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { UserEntity } from './user.entity';
 
 @Entity({ name: 'apply_histories' })
 export class ApplyEntity {

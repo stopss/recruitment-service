@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { ApplyEntity } from './dto/apply.entity';
+import { ApplyEntity } from './apply.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
