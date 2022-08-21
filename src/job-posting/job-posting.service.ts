@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CompanyEntity } from 'src/company/company.entity';
 import { CompanyService } from 'src/company/company.service';
+import { ApplyEntity } from 'src/user/apply.entity';
 import { Repository } from 'typeorm';
 import { savePostDto } from './dto/save.post.dto';
 import { updatePostDto } from './dto/update.post.dto';
@@ -14,10 +15,13 @@ export class JobPostingService {
     private jobPostingRepository: Repository<JobPostingEntity>,
     @InjectRepository(CompanyEntity)
     private companyRepository: Repository<CompanyEntity>,
+    @InjectRepository(ApplyEntity)
+    private applyRepository: Repository<ApplyEntity>,
     private readonly companyService: CompanyService,
   ) {
     this.jobPostingRepository = jobPostingRepository;
     this.companyRepository = companyRepository;
+    this.applyRepository = applyRepository;
   }
 
   async findPostById(id: number) {
@@ -83,6 +87,7 @@ export class JobPostingService {
     try {
       await this.findPostById(id);
 
+      await this.applyRepository.delete({ postId: id });
       await this.jobPostingRepository.delete(id);
 
       return { message: 'Delete job-posting' };
