@@ -4,7 +4,7 @@
 프로젝트 실행
 $ npm run start:dev
 
-API 명세서
+API 명세서 (swagger)
 localhost:3000/api
 ```  
 </br>
