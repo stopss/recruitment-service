@@ -3,6 +3,9 @@
 ```
 프로젝트 실행
 $ npm run start:dev
+
+API 명세서
+localhost:3000/api
 ```  
 </br>
 
